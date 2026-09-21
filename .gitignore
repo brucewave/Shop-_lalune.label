@@ -1,0 +1,15 @@
+# Vercel
+.vercel
+
+# Hệ điều hành
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Trình soạn thảo
+.vscode/
+.idea/
+
+# Node (dự án không cần build, chỉ phòng khi cài thêm công cụ)
+node_modules/
+npm-debug.log*
