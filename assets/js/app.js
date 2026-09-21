@@ -18,23 +18,6 @@
     });
   }
 
-  /* --- Header: đổi nền khi rời khỏi hero ------------------------------- */
-  function initHeader() {
-    var header = $(".header");
-    if (!header || !header.classList.contains("header--over")) return;
-
-    var sentinel = document.createElement("div");
-    sentinel.setAttribute("aria-hidden", "true");
-    sentinel.style.cssText = "position:absolute;top:0;left:0;width:1px;height:70svh;pointer-events:none;";
-    var hero = $(".hero");
-    if (!hero) return;
-    hero.appendChild(sentinel);
-
-    new IntersectionObserver(function (entries) {
-      header.classList.toggle("is-stuck", !entries[0].isIntersecting);
-    }, { threshold: 0 }).observe(sentinel);
-  }
-
   /* --- Ngăn kéo điều hướng --------------------------------------------- */
   function initDrawer() {
     var drawer = $("#nav-drawer");
@@ -377,7 +360,6 @@
   }
 
   function boot() {
-    initHeader();
     initDrawer();
     initCurrentNav();
     initGrids();

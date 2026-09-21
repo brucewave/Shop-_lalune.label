@@ -254,17 +254,6 @@ a { color: inherit; text-decoration: none; }
               border-color var(--t-mid) var(--ease);
 }
 
-/* Trang chủ: header trong suốt đè lên hero, chuyển sang đặc khi cuộn */
-.header--over {
-  background: transparent;
-  border-bottom-color: transparent;
-}
-.header--over .header__bar { color: var(--on-dark); }
-.header--over .header__logo { filter: brightness(0) invert(1); opacity: 0.95; }
-.header--over.is-stuck { background: var(--paper); border-bottom-color: var(--line-soft); }
-.header--over.is-stuck .header__bar { color: var(--body); }
-.header--over.is-stuck .header__logo { filter: none; opacity: 1; }
-
 .header__bar {
   width: 100%;
   max-width: var(--maxw);
@@ -383,56 +372,71 @@ a { color: inherit; text-decoration: none; }
 
 body.is-locked { overflow: hidden; }
 
-/* --- 6. Hero ----------------------------------------------------------- */
+/* --- 6. Hero ------------------------------------------------------------
+   Hero chia đôi thay vì ảnh tràn màn: ảnh gốc chỉ 830x1280 (ảnh điện thoại),
+   tràn màn phải phóng 2,3x nên vỡ. Ở cột phải rộng ~48% thì chỉ phóng ~1,1x.
+   ------------------------------------------------------------------------ */
 .hero {
-  position: relative;
-  min-height: 100svh;
+  margin-top: 76px;                    /* header cố định */
   display: grid;
-  align-items: end;
-  isolation: isolate;
-  background: var(--sand);
+  grid-template-columns: 1fr;
+  background: var(--paper);
 }
-.hero__media { position: absolute; inset: 0; z-index: -2; }
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    min-height: calc(100svh - 76px);
+  }
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(44px, 7vw, 104px);
+  /* Lề trái thẳng hàng với container của cả trang, kể cả trên màn siêu rộng */
+  padding-inline: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)))
+                  clamp(20px, 4vw, 72px);
+}
+
+/* Ảnh phải nằm tuyệt đối: để nguyên trong luồng thì height:100% rơi về auto và
+   chiều cao thật của ảnh (1386px) sẽ kéo cả hero dài ra. */
+.hero__media { position: relative; background: var(--sand); overflow: hidden; }
 .hero__media img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 54% 32%;
-}
-.hero::after {
-  content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    rgba(48, 40, 28, 0.42) 0%,
-    rgba(48, 40, 28, 0.12) 34%,
-    rgba(48, 40, 28, 0.10) 58%,
-    rgba(48, 40, 28, 0.58) 100%
-  );
-}
-.hero__inner {
   width: 100%;
-  max-width: var(--maxw);
-  margin-inline: auto;
-  padding: 0 var(--gutter) clamp(52px, 8vh, 96px);
-  color: var(--on-dark);
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 64%;   /* kéo khung nhìn xuống cho người mẫu vào giữa */
+}
+/* Màn hẹp: ảnh lên trước, cắt theo tỷ lệ dọc vừa phải rồi mới đến chữ */
+@media (max-width: 899px) {
+  .hero__media { order: -1; aspect-ratio: 4 / 5; max-height: 74svh; }
+}
+
+.hero__eyebrow {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 20px;
 }
 .hero__title {
-  font-size: var(--fs-3xl);
-  color: var(--on-dark);
+  font-size: clamp(2.5rem, 4.6vw, 4.125rem);
+  color: var(--ink);
   font-weight: 300;
-  max-width: 14ch;
-  margin-bottom: 20px;
-  text-shadow: 0 1px 24px rgba(40, 33, 22, 0.28);
+  max-width: 15ch;
+  margin-bottom: 22px;
 }
 .hero__sub {
   font-size: var(--fs-md);
-  color: rgba(244, 241, 233, 0.92);
-  max-width: 44ch;
+  line-height: 1.8;
+  color: var(--body);
+  max-width: 42ch;
   margin-bottom: 34px;
-  text-shadow: 0 1px 16px rgba(40, 33, 22, 0.35);
 }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* --- 7. Bảng thương hiệu (4 cột như trang tham khảo) ------------------- */
 .brand-panel { display: grid; grid-template-columns: 1fr; gap: clamp(40px, 5vw, 72px); }
@@ -920,7 +924,8 @@ body.is-locked { overflow: hidden; }
   .header__bar { grid-template-columns: 44px auto 44px; }
   .brand-panel__body { text-align: left; }
   .brand-panel__mark { margin-inline: 0; }
-  .hero__media img { object-position: 58% 28%; }
+  .hero { margin-top: 64px; }
+  .hero__media img { object-position: 50% 30%; }
 }
 
 @media (max-width: 480px) {

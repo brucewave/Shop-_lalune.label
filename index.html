@@ -22,14 +22,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="assets/img/products/layla-01.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/products/layla-01.jpg"
+      imagesrcset="assets/img/products/layla-01-sm.jpg 519w, assets/img/products/layla-01.jpg 830w"
+      imagesizes="(min-width: 900px) 48vw, 100vw" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Bỏ qua, tới nội dung chính</a>
 
-<header class="header header--over">
+<header class="header">
   <div class="header__bar">
     <nav class="header__nav" aria-label="Điều hướng chính">
       <a class="nav-link" href="index.html">Trang chủ</a>
@@ -74,13 +76,21 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero__media">
-      <img src="assets/img/products/layla-01.jpg" alt="Người mẫu mặc Layla Dress màu kem bên hàng rào cây xanh" width="830" height="1280" fetchpriority="high" decoding="async">
-    </div>
-    <div class="hero__inner">
+    <div class="hero__text">
+      <p class="hero__eyebrow">Lalune.label · /la-lun leibl/</p>
       <h1 class="hero__title">Soft silhouettes, lovely details</h1>
       <p class="hero__sub">Layla Dress — dáng xoè nhẹ, thân trên chiết ngực và dây siết sau lưng tự điều chỉnh được độ ôm eo.</p>
-      <a class="btn btn--light" href="shop.html">Xem bộ sưu tập</a>
+      <div class="hero__actions">
+        <a class="btn" href="shop.html">Xem bộ sưu tập</a>
+        <a class="btn btn--ghost" href="product.html?id=layla-dress">Layla Dress</a>
+      </div>
+    </div>
+    <div class="hero__media">
+      <img src="assets/img/products/layla-01.jpg"
+           srcset="assets/img/products/layla-01-sm.jpg 519w, assets/img/products/layla-01.jpg 830w"
+           sizes="(min-width: 900px) 48vw, 100vw"
+           alt="Người mẫu mặc Layla Dress màu kem bên hàng rào cây xanh"
+           width="830" height="1280" fetchpriority="high" decoding="async">
     </div>
   </section>
 
