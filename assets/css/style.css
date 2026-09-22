@@ -522,6 +522,24 @@ body.is-locked { overflow: hidden; }
 /* --- 8. Đầu trang phụ -------------------------------------------------- */
 .page-head { padding-block: calc(var(--chrome-h) + clamp(40px, 6vw, 84px)) clamp(36px, 5vw, 60px); }
 .page-head__title { font-size: var(--fs-2xl); margin-bottom: 14px; }
+/* Dòng định vị thương hiệu dưới tên, để nghiêng theo yêu cầu của shop */
+.page-head__tagline {
+  font-family: var(--serif);
+  font-size: var(--fs-lg);
+  font-style: italic;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Đoạn giới thiệu song ngữ ở trang Về Lalune */
+.story { max-width: 56ch; }
+.story p {
+  font-size: var(--fs-md);
+  line-height: 1.85;
+  color: var(--body);
+  margin-bottom: 1.15em;
+}
+.story p:last-child { margin-bottom: 0; }
 
 .crumbs {
   display: flex;
