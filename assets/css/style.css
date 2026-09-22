@@ -591,7 +591,7 @@ body.is-locked { overflow: hidden; }
 }
 .feature__specs {
   list-style: none;
-  margin: 0 0 30px;
+  margin: 0 0 16px;
   padding: 0;
   border-top: 1px solid var(--line-soft);
   font-size: var(--fs-sm);
@@ -605,13 +605,12 @@ body.is-locked { overflow: hidden; }
 }
 .feature__specs dt, .feature__specs span:first-child { color: var(--muted); }
 .feature__actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.feature__specs .spec-note {
-  display: block;
-  margin-top: 3px;
+/* Ghi chú về màu đứng thành dòng riêng: nhét vào ô bảng thì chật và lệch */
+.feature__note {
   font-size: var(--fs-xs);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--muted);
-  text-align: right;
+  margin: 0 0 24px;
 }
 
 /* Nhãn thời gian đặt trước — thông tin khách cần biết trước khi chốt đơn */

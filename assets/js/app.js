@@ -190,11 +190,10 @@
         '<p class="feature__price">' + esc(L.formatPrice(p.price)) + "</p>" +
         '<ul class="feature__specs">' +
           "<li><span>Size</span><span>" + esc(p.sizes.join(" · ")) + "</span></li>" +
-          "<li><span>Màu</span><span>" + esc(p.color) +
-            (p.colorNote ? '<span class="spec-note">' + esc(p.colorNote) + "</span>" : "") +
-          "</span></li>" +
+          "<li><span>Màu</span><span>" + esc(p.color) + "</span></li>" +
           (skirtLength(p) ? "<li><span>Dài váy</span><span>" + esc(skirtLength(p)) + "</span></li>" : "") +
         "</ul>" +
+        (p.colorNote ? '<p class="feature__note">' + esc(p.colorNote) + "</p>" : "") +
         (p.preorder ? '<p style="margin:0 0 22px"><span class="preorder">' + esc(p.preorder) + "</span></p>" : "") +
         '<div class="feature__actions">' +
           '<a class="btn" href="' + href + '">Xem chi tiết</a>' +
