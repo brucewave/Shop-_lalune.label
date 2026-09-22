@@ -11,12 +11,10 @@ window.LALUNE = (function () {
 
   /* Thông tin chung của shop — sửa ở đây là đổi trên mọi trang */
   var SHOP = {
-    announcement: "Miễn phí vận chuyển nội địa cho tất cả các đơn hàng",
+    /* Câu chạy trên thanh thông báo, ngay dưới thanh điều hướng */
+    announcement: "Pre-order 10–14 ngày cho tất cả các mẫu",
     address: "Ho Chi Minh City",
-    phone: "0797998903",
-    /* Dán mã form Formspree vào đây để bật form đăng ký nhận tin.
-       Để trống thì khối đó hiện nút theo dõi Instagram thay cho form. */
-    newsletterFormId: ""
+    phone: "0797998903"
   };
 
   var PRODUCTS = [
@@ -27,7 +25,7 @@ window.LALUNE = (function () {
       color: "Kem",
       tag: "Mới",
       /* price: null → ẩn giá, hiện "Inbox để biết giá". Đặt số để hiện giá. */
-      price: 585000,
+      price: 495000,
       preorder: "Pre-order 10–14 ngày",
       sizes: ["S", "M"],
       images: [

@@ -74,7 +74,7 @@ vào HTML.
 Trong `products.js`, sửa `price`:
 
 ```js
-price: 585000,     // hiển thị thành 585.000₫
+price: 495000,     // hiển thị thành 495.000₫
 price: null,       // ẩn giá, hiện "Inbox để biết giá"
 ```
 
@@ -84,28 +84,15 @@ Cả ba nằm trong khối `SHOP` ở đầu `products.js`:
 
 ```js
 var SHOP = {
-  announcement: "Miễn phí vận chuyển nội địa cho tất cả các đơn hàng",
-  address: "Hồ Chí Minh",
-  phone: "0797998903",
-  newsletterFormId: ""
+  announcement: "Pre-order 10–14 ngày cho tất cả các mẫu",
+  address: "Ho Chi Minh City",
+  phone: "0797998903"
 };
 ```
 
 Câu thông báo cũng được viết sẵn trong HTML của từng trang để chạy được khi
 tắt JavaScript. Đổi trong `products.js` là đủ cho người dùng bình thường;
 muốn sạch hoàn toàn thì tìm–thay chuỗi đó trong các file `.html`.
-
-### Bật form đăng ký nhận tin
-
-Khối "Subscribe to the newsletter" ở footer hiện đang là nút dẫn sang
-Instagram, vì chưa có chỗ nhận email. Để biến nó thành form thật:
-
-1. Tạo một form miễn phí ở [formspree.io](https://formspree.io) (50 email/tháng).
-2. Chép mã form (dạng `xyzabcd` trong `https://formspree.io/f/xyzabcd`).
-3. Dán vào `newsletterFormId` trong `products.js`.
-
-Trang sẽ tự thay nút Instagram bằng ô nhập email. Chưa dán mã thì nút
-Instagram giữ nguyên — không bao giờ hiện ra một form bấm vào không chạy.
 
 ### Đổi thời gian pre-order
 
@@ -175,6 +162,10 @@ nhưng Google sẽ lập chỉ mục sai địa chỉ.
 - **Logo giữ nguyên ảnh gốc**, chỉ cắt và chuyển sang WebP, không vẽ lại thành
   vector. Nền be của tấm logo (`#e7e1d9`) được lấy làm đúng màu nền của các khu
   dùng logo, nhờ vậy phần dập nổi hoà vào nền thay vì lộ khung chữ nhật.
+- **Ảnh sản phẩm hiện trọn khung, không cắt.** Thẻ sản phẩm và bộ ảnh trang chi
+  tiết dùng `object-fit: contain` trong khung cố định: các thẻ vẫn thẳng hàng
+  nhưng không mẫu nào bị cắt mất gấu váy. Riêng khối giới thiệu lớn thì bỏ hẳn
+  tỷ lệ cố định, chiều cao chạy theo ảnh thật.
 - **Bảng size có cả dạng bảng HTML thật**, không chỉ mỗi ảnh, để người dùng trình
   đọc màn hình và Google đọc được số đo.
 - **Không có form liên hệ giả.** Shop nhận đơn qua Instagram nên trang chỉ dẫn

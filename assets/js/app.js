@@ -390,7 +390,7 @@
     $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
   }
 
-  /* --- Thanh thông báo và khối đăng ký nhận tin ------------------------- */
+  /* --- Thanh thông báo -------------------------------------------------- */
   function initTopbar() {
     var bar = $(".topbar");
     var text = L.shop && L.shop.announcement;
@@ -398,66 +398,8 @@
     if (bar && text && bar.textContent.trim() !== text) bar.textContent = text;
   }
 
-  function initNewsletter() {
-    var box = $("[data-newsletter]");
-    var formId = L.shop && L.shop.newsletterFormId;
-    /* Chưa cấu hình nơi nhận email thì giữ nút Instagram, không dựng form chết. */
-    if (!box || !formId) return;
-
-    var fallback = box.querySelector("p:last-of-type");
-    if (fallback) fallback.remove();
-
-    box.insertAdjacentHTML("beforeend",
-      '<form class="newsletter__form" novalidate>' +
-        '<div class="newsletter__field">' +
-          '<label class="sr-only" for="nl-email">Email của bạn</label>' +
-          '<input class="newsletter__input" id="nl-email" name="email" type="email" ' +
-            'autocomplete="email" required placeholder="Email của bạn">' +
-        "</div>" +
-        '<button class="btn" type="submit">Đăng ký</button>' +
-      "</form>" +
-      '<p class="newsletter__status" role="status" aria-live="polite"></p>');
-
-    var form = $("form", box);
-    var input = $("input", form);
-    var status = $(".newsletter__status", box);
-
-    function say(state, message) {
-      status.dataset.state = state;
-      status.textContent = message;
-    }
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var email = input.value.trim();
-      if (!input.checkValidity() || !email) {
-        say("error", "Email chưa hợp lệ, bạn kiểm tra lại giúp shop nhé.");
-        input.focus();
-        return;
-      }
-      var btn = $("button", form);
-      btn.disabled = true;
-      say("", "Đang gửi…");
-
-      fetch("https://formspree.io/f/" + formId, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form)
-      }).then(function (res) {
-        if (!res.ok) throw new Error(res.status);
-        form.reset();
-        say("ok", "Đã đăng ký. Cảm ơn bạn ♡");
-      }).catch(function () {
-        say("error", "Gửi không được. Bạn nhắn Instagram giúp shop nhé.");
-      }).finally(function () {
-        btn.disabled = false;
-      });
-    });
-  }
-
   function boot() {
     initTopbar();
-    initNewsletter();
     initDrawer();
     initCurrentNav();
     initGrids();
