@@ -69,13 +69,48 @@ vào HTML.
 > Khi có **từ 2 mẫu trở lên**, trang chủ và trang Sản phẩm tự chuyển từ khối
 > giới thiệu lớn sang lưới thẻ sản phẩm. Không phải chỉnh gì thêm.
 
-### Hiện giá thay vì "Inbox để biết giá"
+### Đổi giá
 
-Trong `products.js`, đổi `price: null` thành số tiền:
+Trong `products.js`, sửa `price`:
 
 ```js
-price: 650000,     // hiển thị thành 650.000₫
+price: 585000,     // hiển thị thành 585.000₫
+price: null,       // ẩn giá, hiện "Inbox để biết giá"
 ```
+
+### Đổi thanh thông báo, địa chỉ, số điện thoại
+
+Cả ba nằm trong khối `SHOP` ở đầu `products.js`:
+
+```js
+var SHOP = {
+  announcement: "Miễn phí vận chuyển nội địa cho tất cả các đơn hàng",
+  address: "Hồ Chí Minh",
+  phone: "0797998903",
+  newsletterFormId: ""
+};
+```
+
+Câu thông báo cũng được viết sẵn trong HTML của từng trang để chạy được khi
+tắt JavaScript. Đổi trong `products.js` là đủ cho người dùng bình thường;
+muốn sạch hoàn toàn thì tìm–thay chuỗi đó trong các file `.html`.
+
+### Bật form đăng ký nhận tin
+
+Khối "Subscribe to the newsletter" ở footer hiện đang là nút dẫn sang
+Instagram, vì chưa có chỗ nhận email. Để biến nó thành form thật:
+
+1. Tạo một form miễn phí ở [formspree.io](https://formspree.io) (50 email/tháng).
+2. Chép mã form (dạng `xyzabcd` trong `https://formspree.io/f/xyzabcd`).
+3. Dán vào `newsletterFormId` trong `products.js`.
+
+Trang sẽ tự thay nút Instagram bằng ô nhập email. Chưa dán mã thì nút
+Instagram giữ nguyên — không bao giờ hiện ra một form bấm vào không chạy.
+
+### Đổi thời gian pre-order
+
+Sửa `preorder` trong từng mẫu ở `products.js`. Để `preorder: ""` nếu mẫu đó
+có sẵn, nhãn sẽ tự biến mất.
 
 ### Sửa hướng dẫn bảo quản
 
@@ -144,8 +179,8 @@ nhưng Google sẽ lập chỉ mục sai địa chỉ.
   đọc màn hình và Google đọc được số đo.
 - **Không có form liên hệ giả.** Shop nhận đơn qua Instagram nên trang chỉ dẫn
   thẳng sang đó, kèm nút chép sẵn nội dung tin nhắn có tên mẫu và size.
-- **Không bịa thông tin.** Chất liệu vải, chính sách đổi trả và phí ship không
-  có trong tài liệu chủ shop gửi, nên trang ghi rõ là sẽ báo trong tin nhắn.
+- **Không bịa thông tin.** Những gì chủ shop chưa xác nhận (cách thanh toán,
+  điều kiện đổi trả) thì trang ghi rõ là sẽ báo trong tin nhắn, không tự viết ra.
 
 ---
 
@@ -158,9 +193,10 @@ Lấy trực tiếp từ ảnh logo và hai tấm note của shop:
 | `--paper` | `#f4f1e9` | nền trang |
 | `--paper-alt` | `#ebe7dd` | nền khu xen kẽ, giấy note |
 | `--sheet` | `#e7e1d9` | nền khu có logo, footer |
+| `--line-ctrl` | `#8c7d66` | viền nút chọn size, ô nhập |
 | `--ink` | `#3a3124` | tiêu đề |
 | `--body` | `#574b39` | nội dung |
-| `--muted` | `#736648` | chữ phụ |
+| `--muted` | `#6c5f42` | chữ phụ |
 | `--brand` | `#6b583f` | màu nhấn duy nhất, nút và liên kết |
 
 Chữ: **Cormorant Garamond** (tiêu đề) và **Be Vietnam Pro** (nội dung), cả hai

@@ -160,7 +160,19 @@
         '<h3 class="card__name"><a href="product.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.name) + "</a></h3>" +
         '<p class="card__meta">' + esc(p.subtitle) + "</p>" +
         '<p class="card__price">' + esc(L.formatPrice(p.price)) + "</p>" +
+        (p.preorder ? '<p class="card__meta">' + esc(p.preorder) + "</p>" : "") +
       "</div></li>";
+  }
+
+  /* Chiều dài váy lấy từ cột cuối của bảng size, không viết cứng trong giao diện */
+  function skirtLength(p) {
+    var chart = p.sizeChart;
+    if (!chart || !chart.rows || !chart.rows.length) return "";
+    var last = chart.rows[0][chart.rows[0].length - 1];
+    for (var i = 1; i < chart.rows.length; i++) {
+      if (chart.rows[i][chart.rows[i].length - 1] !== last) return "";
+    }
+    return last;
   }
 
   function featureMarkup(p) {
@@ -174,13 +186,16 @@
       "<div>" +
         (p.tag ? '<p class="eyebrow">' + esc(p.tag) + "</p>" : "") +
         '<h3 class="feature__name"><a href="' + href + '">' + esc(p.name) + "</a></h3>" +
-        '<p class="feature__meta">' + esc(p.subtitle) + "</p>" +
+        '<p class="feature__meta">' + esc(p.blurb || p.subtitle) + "</p>" +
         '<p class="feature__price">' + esc(L.formatPrice(p.price)) + "</p>" +
         '<ul class="feature__specs">' +
           "<li><span>Size</span><span>" + esc(p.sizes.join(" · ")) + "</span></li>" +
-          "<li><span>Màu</span><span>" + esc(p.color) + "</span></li>" +
-          "<li><span>Dài váy</span><span>83cm</span></li>" +
+          "<li><span>Màu</span><span>" + esc(p.color) +
+            (p.colorNote ? '<span class="spec-note">' + esc(p.colorNote) + "</span>" : "") +
+          "</span></li>" +
+          (skirtLength(p) ? "<li><span>Dài váy</span><span>" + esc(skirtLength(p)) + "</span></li>" : "") +
         "</ul>" +
+        (p.preorder ? '<p style="margin:0 0 22px"><span class="preorder">' + esc(p.preorder) + "</span></p>" : "") +
         '<div class="feature__actions">' +
           '<a class="btn" href="' + href + '">Xem chi tiết</a>' +
           '<a class="btn btn--ghost" href="' + L.igMessage + '" target="_blank" rel="noopener noreferrer">Đặt qua Instagram</a>' +
@@ -260,7 +275,13 @@
     if (descBox) descBox.innerHTML = p.description.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
 
     var details = $("[data-details]", root);
-    if (details) details.innerHTML = p.details.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    if (details) {
+      details.innerHTML = p.details.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+      if (p.colorNote) {
+        details.insertAdjacentHTML("afterend",
+          '<p style="margin-top:14px;color:var(--muted)">' + esc(p.colorNote) + "</p>");
+      }
+    }
 
     /* Size */
     var picker = $("[data-sizes]", root);
@@ -284,6 +305,15 @@
           }).join("") + "</tr>";
         }).join("") + "</tbody>";
     }
+    var pre = $("[data-preorder]", root);
+    if (pre) {
+      if (p.preorder) { pre.textContent = p.preorder; pre.hidden = false; }
+      else { pre.hidden = true; }
+    }
+
+    var advice = $("[data-size-advice]", root);
+    if (advice && p.sizeAdvice) advice.textContent = p.sizeAdvice;
+
     var chartNote = $("[data-size-note]", root);
     if (chartNote && p.sizeChart) chartNote.textContent = p.sizeChart.note;
 
@@ -300,7 +330,8 @@
       copyBtn.addEventListener("click", function () {
         var checked = $('input[name="size"]:checked', root);
         var size = checked ? checked.value : p.sizes[0];
-        var text = "Chào Lalune, mình muốn đặt " + p.name + " – size " + size + ". Cho mình xin giá và cách thanh toán nhé!";
+        var text = "Chào Lalune, mình muốn đặt " + p.name + " – size " + size +
+          ". Cho mình hỏi cách thanh toán và thời gian giao nhé!";
         var done = function (ok) {
           if (!status) return;
           status.textContent = ok
@@ -359,7 +390,74 @@
     $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
   }
 
+  /* --- Thanh thông báo và khối đăng ký nhận tin ------------------------- */
+  function initTopbar() {
+    var bar = $(".topbar");
+    var text = L.shop && L.shop.announcement;
+    /* HTML đã có sẵn câu này để chạy được cả khi tắt JS; chỉ ghi đè khi khác nhau. */
+    if (bar && text && bar.textContent.trim() !== text) bar.textContent = text;
+  }
+
+  function initNewsletter() {
+    var box = $("[data-newsletter]");
+    var formId = L.shop && L.shop.newsletterFormId;
+    /* Chưa cấu hình nơi nhận email thì giữ nút Instagram, không dựng form chết. */
+    if (!box || !formId) return;
+
+    var fallback = box.querySelector("p:last-of-type");
+    if (fallback) fallback.remove();
+
+    box.insertAdjacentHTML("beforeend",
+      '<form class="newsletter__form" novalidate>' +
+        '<div class="newsletter__field">' +
+          '<label class="sr-only" for="nl-email">Email của bạn</label>' +
+          '<input class="newsletter__input" id="nl-email" name="email" type="email" ' +
+            'autocomplete="email" required placeholder="Email của bạn">' +
+        "</div>" +
+        '<button class="btn" type="submit">Đăng ký</button>' +
+      "</form>" +
+      '<p class="newsletter__status" role="status" aria-live="polite"></p>');
+
+    var form = $("form", box);
+    var input = $("input", form);
+    var status = $(".newsletter__status", box);
+
+    function say(state, message) {
+      status.dataset.state = state;
+      status.textContent = message;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = input.value.trim();
+      if (!input.checkValidity() || !email) {
+        say("error", "Email chưa hợp lệ, bạn kiểm tra lại giúp shop nhé.");
+        input.focus();
+        return;
+      }
+      var btn = $("button", form);
+      btn.disabled = true;
+      say("", "Đang gửi…");
+
+      fetch("https://formspree.io/f/" + formId, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form)
+      }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        say("ok", "Đã đăng ký. Cảm ơn bạn ♡");
+      }).catch(function () {
+        say("error", "Gửi không được. Bạn nhắn Instagram giúp shop nhé.");
+      }).finally(function () {
+        btn.disabled = false;
+      });
+    });
+  }
+
   function boot() {
+    initTopbar();
+    initNewsletter();
     initDrawer();
     initCurrentNav();
     initGrids();

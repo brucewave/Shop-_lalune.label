@@ -29,6 +29,8 @@
 <body>
 <a class="skip-link" href="#main">Bỏ qua, tới nội dung chính</a>
 
+<div class="topbar" role="status">Miễn phí vận chuyển nội địa cho tất cả các đơn hàng</div>
+
 <header class="header">
   <div class="header__bar">
     <nav class="header__nav" aria-label="Điều hướng chính">
@@ -99,7 +101,8 @@
           <p class="pdp__phonetic" data-field="subtitle">Váy ngắn dáng xoè, chiết eo, dây siết sau lưng</p>
 
           <p class="pdp__price" data-field="price">Inbox để biết giá</p>
-          <p class="pdp__price-note">Giá thay đổi theo đợt vải, nhắn Instagram để nhận báo giá hiện tại.</p>
+          <p class="pdp__price-note" data-price-note>Đã bao gồm miễn phí vận chuyển nội địa.</p>
+          <p style="margin-bottom:26px"><span class="preorder" data-preorder hidden></span></p>
 
           <div class="pdp__desc lede" data-desc></div>
 
@@ -113,7 +116,7 @@
             <a class="btn btn--wide" href="https://ig.me/m/_lalune.label" target="_blank" rel="noopener noreferrer">Đặt hàng qua Instagram</a>
             <button type="button" class="btn btn--ghost btn--wide" data-copy-order>Sao chép nội dung nhắn</button>
           </div>
-          <p class="pdp__note" role="status" aria-live="polite" data-order-status>Bấm “Sao chép nội dung nhắn” để có sẵn câu hỏi giá kèm size, rồi dán vào khung chat.</p>
+          <p class="pdp__note" role="status" aria-live="polite" data-order-status>Bấm “Sao chép nội dung nhắn” để có sẵn nội dung đặt hàng kèm size, rồi dán vào khung chat.</p>
 
           <!-- Chi tiết -->
           <div class="accordion">
@@ -215,7 +218,7 @@
     <div class="wrap wrap--narrow ig" data-reveal>
       <p class="eyebrow">Còn thắc mắc?</p>
       <p class="ig__handle">@_lalune.label</p>
-      <p class="ig__text">Gửi chiều cao, cân nặng và số đo eo của bạn, shop sẽ tư vấn size giúp.</p>
+      <p class="ig__text" data-size-advice>Gửi chiều cao, cân nặng, số đo v1 và v2 trên rốn, shop sẽ giúp bạn tư vấn size.</p>
       <a class="btn" href="https://ig.me/m/_lalune.label" target="_blank" rel="noopener noreferrer">Nhắn tin cho shop</a>
     </div>
   </section>
@@ -227,7 +230,11 @@
     <div class="footer__top">
       <div class="footer__brand">
         <img class="footer__logo" src="assets/img/logo-lockup-text.webp" alt="Lalune.label — /la-lun leibl/" width="900" height="390" loading="lazy" decoding="async">
-        <p class="footer__tagline">Soft silhouettes, lovely details. Nhãn váy nhỏ, đặt hàng trực tiếp qua Instagram.</p>
+        <p class="footer__tagline">Soft silhouettes, lovely details.</p>
+        <ul class="footer__contact">
+          <li><span class="label">Address:</span><span>Ho Chi Minh City</span></li>
+          <li><span class="label">Phone:</span><a href="tel:+84797998903">0797998903</a></li>
+        </ul>
       </div>
       <nav aria-label="Liên kết trang">
         <p class="footer__col-title">Trang</p>
@@ -246,6 +253,11 @@
           <li><a href="https://www.instagram.com/_lalune.label/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         </ul>
       </nav>
+      <div class="newsletter" data-newsletter>
+        <p class="footer__col-title">Subscribe to the newsletter</p>
+        <p class="footer__tagline" style="margin-bottom:0">Subscribe now to get special events and exclusive discounts!</p>
+        <p style="margin:14px 0 0"><a class="btn btn--ghost" href="https://www.instagram.com/_lalune.label/" target="_blank" rel="noopener noreferrer">Theo dõi Instagram</a></p>
+      </div>
     </div>
     <div class="footer__bottom">
       <span>© <span data-year>2026</span> Lalune.label</span>
