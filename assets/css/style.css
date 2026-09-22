@@ -265,7 +265,14 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   text-align: center;
   line-height: 1.2;
+  overflow: hidden;
 }
+/* Hai câu thông báo đổi nhau bằng fade; JS dừng khi trỏ vào hoặc tab bị ẩn */
+.topbar__msg {
+  display: block;
+  transition: opacity var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+}
+.topbar__msg.is-out { opacity: 0; transform: translateY(-5px); }
 
 .header {
   position: fixed;
@@ -440,7 +447,9 @@ body.is-locked { overflow: hidden; }
 }
 /* Màn hẹp: ảnh lên trước, cắt theo tỷ lệ dọc vừa phải rồi mới đến chữ */
 @media (max-width: 899px) {
-  .hero__media { order: -1; aspect-ratio: 4 / 5; max-height: 74svh; }
+  /* width:100% là bắt buộc: aspect-ratio đi cùng max-height sẽ làm ô grid tự co
+     bề ngang lại để giữ tỷ lệ, chừa một mảng nền trống bên phải khi màn thấp. */
+  .hero__media { order: -1; width: 100%; aspect-ratio: 4 / 5; max-height: 74svh; }
 }
 
 .hero__eyebrow {

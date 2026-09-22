@@ -84,7 +84,10 @@ Cả ba nằm trong khối `SHOP` ở đầu `products.js`:
 
 ```js
 var SHOP = {
-  announcement: "Pre-order 10–14 ngày cho tất cả các mẫu",
+  announcements: [                       // nhiều câu thì tự chạy luân phiên
+    "Miễn phí vận chuyển nội địa",
+    "Pre-order 15–20 ngày cho tất cả các mẫu"
+  ],
   address: "Ho Chi Minh City",
   phone: "0797998903"
 };

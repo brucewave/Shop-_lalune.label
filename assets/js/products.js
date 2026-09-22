@@ -11,8 +11,12 @@ window.LALUNE = (function () {
 
   /* Thông tin chung của shop — sửa ở đây là đổi trên mọi trang */
   var SHOP = {
-    /* Câu chạy trên thanh thông báo, ngay dưới thanh điều hướng */
-    announcement: "Pre-order 10–14 ngày cho tất cả các mẫu",
+    /* Thanh thông báo dưới thanh điều hướng. Nhiều câu thì tự chạy luân phiên,
+       một câu thì đứng yên. Thêm hoặc bớt câu ở đây là đủ. */
+    announcements: [
+      "Miễn phí vận chuyển nội địa",
+      "Pre-order 15–20 ngày cho tất cả các mẫu"
+    ],
     address: "Ho Chi Minh City",
     phone: "0797998903"
   };
@@ -26,7 +30,7 @@ window.LALUNE = (function () {
       tag: "Mới",
       /* price: null → ẩn giá, hiện "Inbox để biết giá". Đặt số để hiện giá. */
       price: 495000,
-      preorder: "Pre-order 10–14 ngày",
+      preorder: "Pre-order 15–20 ngày",
       sizes: ["S", "M"],
       images: [
         { src: "assets/img/products/layla-01.jpg",

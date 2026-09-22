@@ -393,9 +393,41 @@
   /* --- Thanh thông báo -------------------------------------------------- */
   function initTopbar() {
     var bar = $(".topbar");
-    var text = L.shop && L.shop.announcement;
-    /* HTML đã có sẵn câu này để chạy được cả khi tắt JS; chỉ ghi đè khi khác nhau. */
-    if (bar && text && bar.textContent.trim() !== text) bar.textContent = text;
+    if (!bar) return;
+    var list = (L.shop && L.shop.announcements) || [];
+    if (!list.length) return;
+
+    var msg = $(".topbar__msg", bar) || bar;
+    msg.textContent = list[0];
+    if (list.length < 2) return;
+
+    /* Không đặt aria-live: câu quảng cáo tự đổi mà đọc lên thì phiền người dùng
+       trình đọc màn hình. Họ vẫn đọc được câu đang hiện khi duyệt tới đây. */
+    var i = 0;
+    var timer = null;
+
+    function step() {
+      i = (i + 1) % list.length;
+      if (reduceMotion) { msg.textContent = list[i]; return; }
+      msg.classList.add("is-out");
+      setTimeout(function () {
+        msg.textContent = list[i];
+        msg.classList.remove("is-out");
+      }, 300);
+    }
+
+    function play() { if (!timer) timer = setInterval(step, 4500); }
+    function pause() { clearInterval(timer); timer = null; }
+
+    play();
+    /* Dừng khi người dùng đang trỏ vào hoặc khi tab bị ẩn */
+    bar.addEventListener("mouseenter", pause);
+    bar.addEventListener("mouseleave", play);
+    bar.addEventListener("focusin", pause);
+    bar.addEventListener("focusout", play);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) pause(); else play();
+    });
   }
 
   function boot() {
